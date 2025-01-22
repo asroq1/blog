@@ -64,6 +64,7 @@ const TiptapEditor = ({ content, onChange }: EditorProps) => {
       }),
     ],
     content: content, // 초기값 설정
+    immediatelyRender: false, // Mismatch 설정
     editorProps: {
       attributes: {
         class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl m-5 focus:outline-none',

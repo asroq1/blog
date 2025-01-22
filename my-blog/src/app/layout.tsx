@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Footer from '@/components/layouts/Footer'
 import Navigation from '@/components/layouts/Navigation'
+import { AuthProvider } from '@/lib/AuthContext'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,9 +17,11 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <Navigation />
-        {children}
-        <Footer />
+        <AuthProvider>
+          <Navigation />
+          {children}
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   )

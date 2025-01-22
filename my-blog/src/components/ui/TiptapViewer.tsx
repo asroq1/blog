@@ -4,7 +4,7 @@
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Image from '@tiptap/extension-image'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 
 interface ViewerProps {
   content: string
@@ -21,6 +21,7 @@ const TiptapViewer = ({ content }: ViewerProps) => {
       }),
     ],
     content: content, // 내용 전달
+    immediatelyRender: false, // Mismatch 설정
     editable: false,
     editorProps: {
       attributes: {

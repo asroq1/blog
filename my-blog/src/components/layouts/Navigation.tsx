@@ -1,14 +1,29 @@
 import Link from 'next/link'
 import React from 'react'
+import LogoutButton from '../ui/LogoutButton'
+import { AuthRequired } from '@/lib/AuthGuard'
 
 const Navigation = () => {
   return (
-    <nav className="flex justify-between">
-      <h2>로고</h2>
-      <Link href="post">Post</Link>
-      <Link href="/">Home</Link>
-      <Link href="/about">About</Link>
-    </nav>
+    <header className="flex h-[62px] justify-between bg-white">
+      <Link href="/" className="text-xl font-semibold">
+        logo
+      </Link>
+      <nav className="flex items-center gap-4">
+        <AuthRequired>
+          <LogoutButton />
+          <Link href="/posting" className="text-sm">
+            Post
+          </Link>
+        </AuthRequired>
+        <Link href="/" className="text-sm">
+          Home
+        </Link>
+        <Link href="/about" className="text-sm">
+          About
+        </Link>
+      </nav>
+    </header>
   )
 }
 
