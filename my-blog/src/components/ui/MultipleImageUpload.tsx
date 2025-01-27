@@ -1,17 +1,23 @@
 'use client'
 
-import React, { useState, useCallback } from 'react'
-import Image from 'next/image'
+import React, { useState, useCallback, useEffect } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { Button } from '@/components/ui/button'
 import { X } from 'lucide-react'
+import Image from 'next/image'
 
 interface MultipleImageUploadProps {
   onImagesUpload: (files: File[]) => void
+  onImagesDelete: (urls: string[]) => void
+  initialImages?: string[]
 }
 
-export default function MultipleImageUpload({ onImagesUpload }: MultipleImageUploadProps) {
-  const [previews, setPreviews] = useState<string[]>([])
+export default function MultipleImageUpload({
+  onImagesUpload,
+  initialImages,
+  onImagesDelete,
+}: MultipleImageUploadProps) {
+  const [previews, setPreviews] = useState<string[] | null>(initialImages || [])
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -29,8 +35,16 @@ export default function MultipleImageUpload({ onImagesUpload }: MultipleImageUpl
   })
 
   const removeImage = (index: number) => {
-    setPreviews((prev) => prev.filter((_, i) => i !== index))
+    setPreviews((prev) => {
+      const newPreviews = prev.filter((_, i) => i !== index)
+      onImagesDelete([prev[index]]) // 삭제된 이미지 URL 전달
+      return newPreviews
+    })
   }
+  // initialImages가 변경될 때 previews 업데이트
+  useEffect(() => {
+    setPreviews(initialImages || [])
+  }, [initialImages])
 
   return (
     <div className="mx-auto w-full max-w-md">
@@ -52,6 +66,7 @@ export default function MultipleImageUpload({ onImagesUpload }: MultipleImageUpl
               width={200}
               height={150}
               className="h-auto w-full rounded-lg"
+              unoptimized
             />
             <Button
               variant="destructive"

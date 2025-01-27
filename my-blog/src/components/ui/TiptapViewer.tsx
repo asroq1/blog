@@ -32,13 +32,7 @@ const TiptapViewer = ({ content }: ViewerProps) => {
 
   if (!editor) return null
 
-  return (
-    <Card>
-      <CardContent>
-        <EditorContent editor={editor} />
-      </CardContent>
-    </Card>
-  )
+  return <EditorContent editor={editor} />
 }
 
 export default TiptapViewer

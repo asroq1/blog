@@ -1,20 +1,17 @@
 import type { NextConfig } from 'next'
 
+/** @type {import('next').NextConfig} */
+
 const nextConfig: NextConfig = {
-  /* config options here */
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://apis.google.com",
-          },
-        ],
-      },
-    ]
+  reactStrictMode: true,
+  images: {
+    domains: ['firebasestorage.googleapis.com', 'coinpayments.net'],
+    minimumCacheTTL: 1500000,
   },
+  compiler: {
+    removeConsole: false,
+  },
+  swcMinify: true,
   webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/,
@@ -24,4 +21,4 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default nextConfig
+module.exports = nextConfig

@@ -5,19 +5,19 @@ import { AuthRequired } from '@/lib/AuthGuard'
 
 const Navigation = () => {
   return (
-    <header className="flex h-[62px] justify-between bg-white">
+    <header className="flex h-[62px] justify-between bg-white p-2">
       <Link href="/" className="text-xl font-semibold">
         logo
       </Link>
       <nav className="flex items-center gap-4">
         <AuthRequired>
           <LogoutButton />
-          <Link href="/posting" className="text-sm">
+          <Link href="/admin/posting" className="text-sm">
             Post
           </Link>
         </AuthRequired>
         <Link href="/" className="text-sm">
-          Home
+          Work
         </Link>
         <Link href="/about" className="text-sm">
           About

@@ -17,6 +17,9 @@ export default {
       laptop: '1024px', // 작은 데스크톱
     },
     extend: {
+      fontFamily: {
+        sans: ['var(--font-arita)'],
+      },
       colors: {
         background: '#F3F4F6',
         foreground: 'hsl(var(--foreground))',

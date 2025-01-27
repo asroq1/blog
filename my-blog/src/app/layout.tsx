@@ -3,6 +3,8 @@ import './globals.css'
 import Footer from '@/components/layouts/Footer'
 import Navigation from '@/components/layouts/Navigation'
 import { AuthProvider } from '@/lib/AuthContext'
+import QueryProviders from '@/lib/QueryProvider'
+import { AritaDotum } from '@/app/font'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -15,13 +17,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" className={AritaDotum.className}>
       <body>
-        <AuthProvider>
-          <Navigation />
-          {children}
-          <Footer />
-        </AuthProvider>
+        <QueryProviders>
+          <AuthProvider>
+            <Navigation />
+            {children}
+            <Footer />
+          </AuthProvider>
+        </QueryProviders>
       </body>
     </html>
   )

@@ -8,11 +8,16 @@ import { X } from 'lucide-react'
 
 interface MainImageUploadProps {
   onImageUpload: (file: File) => void
+  onImageDelete: () => void
+  initialImage?: string
 }
 
-export default function MainImageUpload({ onImageUpload }: MainImageUploadProps) {
-  const [preview, setPreview] = useState<string | null>(null)
-
+export default function MainImageUpload({
+  onImageUpload,
+  onImageDelete,
+  initialImage,
+}: MainImageUploadProps) {
+  const [preview, setPreview] = useState<string | null>(initialImage || null)
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       const file = acceptedFiles[0]
@@ -30,6 +35,7 @@ export default function MainImageUpload({ onImageUpload }: MainImageUploadProps)
 
   const removeImage = () => {
     setPreview(null)
+    onImageDelete() // 삭제 이벤트 전달
   }
 
   return (
@@ -49,6 +55,7 @@ export default function MainImageUpload({ onImageUpload }: MainImageUploadProps)
               width={400}
               height={300}
               className="h-auto w-full rounded-lg"
+              unoptimized
             />
             <Button
               variant="destructive"

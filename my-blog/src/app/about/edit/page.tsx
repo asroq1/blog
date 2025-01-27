@@ -6,92 +6,114 @@ import TiptapEditor from '@/components/ui/TiptapEditor'
 import { Button } from '@/components/ui/button'
 import BackButton from '@/components/ui/BackButton'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { updatePost } from '@/app/firebase/post'
-import MultipleImageUpload from '@/components/ui/MultipleImageUpload'
 import MainImageUpload from '@/components/ui/MainImageUpload'
+import AlertMessage from '@/components/ui/AlertMessage'
+import { useAbout, useUpdateAbout } from '@/app/hooks/useAbout'
 
-interface EditAboutProps {
-  params: {
-    id: string
-  }
+interface About {
+  content: string
+  aboutUrl: string | null
 }
 
-export default function EditAbout({ params }: EditAboutProps) {
+export default function EditAbout() {
   const router = useRouter()
-  const [post, setPost] = useState({
-    title: '',
-    content: '',
-    images: [],
-  })
+  const [showAlert, setShowAlert] = useState(false)
+  const { data: about, isLoading } = useAbout()
+  const updateMutation = useUpdateAbout()
+  const [updatedContent, setUpdatedContent] = useState<About | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [isImageChanged, setIsImageChanged] = useState(false)
 
-  // 기존 데이터 불러오기
-  //   useEffect(() => {
-  //     // Firebase에서 데이터 불러오기 (임시로 더미데이터 사용)
-  //     setPost({
-  //       title: dummyData.title,
-  //       content: dummyData.description,
-  //       images: dummyData.images,
-  //     })
-  //   }, [params.id])
+  // 어바웃 이미지 삭제 핸들러
+  const handleMainImageDelete = () => {
+    setImageFile(null)
+  }
 
+  // 어바웃 이미지 업로드 핸들러
   const handleMainImageUpload = (file: File) => {
-    console.log('Main image uploaded:', file)
-    // 여기에서 파일을 서버로 업로드하거나 상태를 업데이트할 수 있습니다.
+    setImageFile(file)
+    setIsImageChanged(true)
+  }
+
+  // 어바웃 컨텐츠 수정 핸들러
+  const handleEditorChange = (newContent: string) => {
+    setUpdatedContent(newContent)
   }
 
   const handleUpdate = async () => {
+    if (!updatedContent) return
+
+    // 이미지 검증 로직 수정
+    if (!imageFile && !about?.aboutUrl && isImageChanged) {
+      setShowAlert(true)
+      return
+    }
+
     try {
-      await updatePost(params.id, {
-        title: post.title,
-        content: post.content,
-        images: post.images,
+      setLoading(true)
+      await updateMutation.mutateAsync({
+        content: updatedContent,
+        imageFile: isImageChanged ? imageFile : undefined,
+        existingImageUrl: !isImageChanged ? about?.aboutUrl : undefined,
       })
-      router.push(`/posts/${params.id}`)
+      router.push('/about')
     } catch (error) {
       console.error('Update failed:', error)
+    } finally {
+      setLoading(false)
     }
   }
+
+  useEffect(() => {
+    if (about?.content) {
+      setUpdatedContent(about?.content)
+    }
+    if (about?.aboutUrl) {
+      setImageFile(about?.aboutUrl)
+    }
+  }, [about])
+
+  if (isLoading) return <div>Loading...</div>
+
   return (
-    <div className="bg-background min-h-screen">
-      <div className="flex items-center justify-between p-4">
-        <BackButton location="post" isHidden={true} />
-        <Button onClick={handleUpdate}>저장하기</Button>
-      </div>
-      <div className="mx-auto max-w-4xl space-y-8 p-4">
-        <div className="container mx-auto px-4 py-8">
-          <div className="mb-8">
-            <h2 className="mb-2 text-xl font-semibold">이미지</h2>
-            <MainImageUpload onImageUpload={handleMainImageUpload} />
+    <>
+      <AlertMessage
+        isOpen={showAlert}
+        onClose={() => setShowAlert(false)}
+        title="이미지 필요"
+        message="프로필 이미지를 넣어주세요."
+      />
+      <div className="bg-background container mx-auto min-h-screen">
+        <div className="flex items-center justify-between p-4">
+          <BackButton location="post" />
+        </div>
+        <div className="mx-auto max-w-4xl space-y-8 p-4">
+          <div className="container mx-auto px-4 py-8">
+            <div className="mb-8">
+              <h2 className="mb-2 text-xl font-semibold">프로필 이미지</h2>
+              <MainImageUpload
+                onImageUpload={handleMainImageUpload}
+                onImageDelete={handleMainImageDelete}
+                initialImage={about?.aboutUrl}
+              />
+            </div>
           </div>
         </div>
+        <div className="mx-auto max-w-4xl space-y-6 p-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>내용 수정</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <TiptapEditor content={updatedContent} onChange={handleEditorChange} />
+            </CardContent>
+          </Card>
+          <Button className="w-full" disabled={loading} onClick={handleUpdate}>
+            {loading ? '저장 중...' : '저장하기'}
+          </Button>
+        </div>
       </div>
-      <div className="mx-auto max-w-4xl space-y-6 p-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>제목 수정</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Input
-              value={post.title}
-              onChange={(e) => setPost({ ...post, title: e.target.value })}
-              placeholder="제목을 입력하세요"
-            />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>내용 수정</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <TiptapEditor
-              content={post.content}
-              onChange={(newContent) => setPost({ ...post, content: newContent })}
-            />
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+    </>
   )
 }

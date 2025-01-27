@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  --font-arita: AritaDotum, system-ui, sans-serif;
 }
 
 @layer base {
@@ -70,4 +70,3 @@ body {
     @apply bg-background text-foreground;
   }
 }
-

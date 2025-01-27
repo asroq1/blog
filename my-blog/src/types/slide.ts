@@ -1,5 +1,6 @@
 export interface Slide {
   id: number
-  image: string
+  thumbnail: string[]
+  content: string
   title: string
 }
