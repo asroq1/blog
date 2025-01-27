@@ -3,7 +3,8 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 interface CarouselProps {
-  slides: []
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  slides: any[]
   autoplay?: boolean
   showDots?: boolean
   title?: string
@@ -44,7 +45,7 @@ export default function DetailCarousel({
                 className="h-[400px] w-full object-cover"
                 width={600}
                 height={400}
-                unoptimized
+                // unoptimized
               />
               {/* </Link> */}
               <div className="absolute bottom-0 left-0 right-0 bg-black/50 p-4">

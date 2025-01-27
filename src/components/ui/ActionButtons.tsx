@@ -27,7 +27,7 @@ export const ActionButtons = ({ id, location }: ActionsProps) => {
 
   const handleDelete = async () => {
     try {
-      await deletePost(id)
+      await deletePost(id.toString())
       router.push('/')
     } catch (error) {
       console.error('Delete failed:', error)

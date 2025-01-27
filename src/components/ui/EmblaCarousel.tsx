@@ -1,5 +1,4 @@
 import useEmblaCarousel from 'embla-carousel-react'
-import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -15,13 +14,8 @@ interface CarouselProps {
   showDots?: boolean
 }
 
-export default function EmblaCarousel({
-  slides,
-  autoplay = true,
-  showDots = false,
-  className,
-}: CarouselProps) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
+export default function EmblaCarousel({ slides, autoplay = true, className }: CarouselProps) {
+  const [emblaRef] = useEmblaCarousel({
     loop: true,
     ...(autoplay && { autoplay: { delay: 1000 } }),
   })
@@ -41,7 +35,7 @@ export default function EmblaCarousel({
                     fill
                     sizes="100vw"
                     priority
-                    unoptimized
+                    // unoptimized
                   />
                 </div>
               </Link>

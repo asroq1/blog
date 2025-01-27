@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     const expiresIn = 60 * 60 * 24 * 5 * 1000 // 5 days
     const sessionCookie = await adminAuth.createSessionCookie(token, { expiresIn })
 
-    cookies().set('session', sessionCookie, {
+    ;(await cookies()).set('session', sessionCookie, {
       maxAge: expiresIn,
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { usePost } from '@/app/hooks/usePost'
@@ -10,7 +11,23 @@ import React from 'react'
 
 const PostDetail = () => {
   const params = useParams()
-  const { data: post, isLoading, error } = usePost(params.id)
+  interface Post {
+    id: string
+    title: string
+    content: string
+    thumbnailUrl: string
+    detailImageUrls: string[]
+  }
+
+  const {
+    data: post,
+    isLoading,
+    error,
+  } = usePost(Array.isArray(params.id) ? params.id[0] : params.id) as {
+    data: Post | null
+    isLoading: boolean
+    error: any
+  }
 
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error loading post</div>
@@ -18,7 +35,7 @@ const PostDetail = () => {
 
   // console.log('post', post)
   // thumbnailUrl을 포함한 새로운 이미지 배열 생성
-  const allImages = [post.thumbnailUrl, ...post.detailImageUrls]
+  const allImages = [post?.thumbnailUrl, ...post?.detailImageUrls]
   // console.log('allImages', allImages)
   return (
     <>
@@ -29,7 +46,7 @@ const PostDetail = () => {
       <div className="laptop:items-center mx-auto  my-0 flex min-h-screen  w-[90%] items-start justify-center gap-6 bg-white p-4">
         <div className="mx-auto flex max-w-4xl flex-col gap-6">
           <section className="w-full">
-            <DetailCarousel slides={allImages} title={post.title} />
+            <DetailCarousel slides={allImages} title={post?.title} />
           </section>
         </div>
       </div>

@@ -66,7 +66,7 @@ export default function MultipleImageUpload({
               width={200}
               height={150}
               className="h-auto w-full rounded-lg"
-              unoptimized
+              // unoptimized
             />
             <Button
               variant="destructive"

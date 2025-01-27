@@ -1,7 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // lib/firebase/posts.ts
-import { db, storage } from '@/app/firebase/firebase'
+import { db } from '@/app/firebase/firebase'
 import { doc, updateDoc } from 'firebase/firestore'
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+
+interface Post {
+  title?: string
+  content: string
+  thumbnailUrl: string
+  detailImageUrls: string[]
+}
 
 // export async function updatePost(
 //   postId: string,
@@ -25,8 +32,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 //   }
 // }
 
-export const updatePost = async (docId: string, data: Partial<Post>) => {
+export const updatePost = async (docId: any, data: Partial<Post>) => {
   const docRef = doc(db, 'posts', docId)
   return updateDoc(docRef, data)
 }
-

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery } from '@tanstack/react-query'
 import { collection, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore'
 import { db } from '@/app/firebase/firebase'
@@ -22,7 +23,7 @@ export function usePost(postId: string) {
 }
 
 // 게시물 수정 조회 훅
-export function useUpdate(postId: string) {
+export function useUpdate(postId: string): { data: any | null; isLoading: boolean } {
   return useQuery({
     queryKey: ['update', postId],
     queryFn: async () => {

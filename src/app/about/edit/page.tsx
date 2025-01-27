@@ -38,7 +38,7 @@ export default function EditAbout() {
 
   // 어바웃 컨텐츠 수정 핸들러
   const handleEditorChange = (newContent: string) => {
-    setUpdatedContent(newContent)
+    setUpdatedContent({ content: newContent, aboutUrl: about?.aboutUrl ?? null })
   }
 
   const handleUpdate = async () => {
@@ -53,7 +53,7 @@ export default function EditAbout() {
     try {
       setLoading(true)
       await updateMutation.mutateAsync({
-        content: updatedContent,
+        content: updatedContent.content,
         imageFile: isImageChanged ? imageFile : undefined,
         existingImageUrl: !isImageChanged ? about?.aboutUrl : undefined,
       })
@@ -67,7 +67,7 @@ export default function EditAbout() {
 
   useEffect(() => {
     if (about?.content) {
-      setUpdatedContent(about?.content)
+      setUpdatedContent({ content: about.content, aboutUrl: about?.aboutUrl ?? null })
     }
     if (about?.aboutUrl) {
       setImageFile(about?.aboutUrl)
@@ -86,7 +86,7 @@ export default function EditAbout() {
       />
       <div className="bg-background container mx-auto min-h-screen">
         <div className="flex items-center justify-between p-4">
-          <BackButton location="post" />
+          <BackButton />
         </div>
         <div className="mx-auto max-w-4xl space-y-8 p-4">
           <div className="container mx-auto px-4 py-8">
@@ -106,7 +106,7 @@ export default function EditAbout() {
               <CardTitle>내용 수정</CardTitle>
             </CardHeader>
             <CardContent>
-              <TiptapEditor content={updatedContent} onChange={handleEditorChange} />
+              <TiptapEditor content={updatedContent?.content || ''} onChange={handleEditorChange} />
             </CardContent>
           </Card>
           <Button className="w-full" disabled={loading} onClick={handleUpdate}>

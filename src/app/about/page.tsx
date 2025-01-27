@@ -33,7 +33,7 @@ export default function ProfilePage() {
               className="h-auto w-full" // 컨테이너 너비에 맞춰 조정, 높이 자동
               sizes="(max-width: 768px) 100vw, 700px" // 브라우저에 최적화된 이미지 크기 제공
               priority
-              unoptimized
+              // unoptimized
             />
           </div>
         </section>

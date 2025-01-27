@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -15,13 +16,13 @@ import { useUpdate } from '@/app/hooks/usePost'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import AlertMessage from '@/components/ui/AlertMessage'
 
-interface Post {
-  docId: string
-  title: string
-  content: string
-  thumbnailUrl: string | null
-  detailImageUrls: string[]
-}
+// interface Post {
+//   docId: string
+//   title: string
+//   content: string
+//   thumbnailUrl: string | null
+//   detailImageUrls: string[]
+// }
 const queryClient = new QueryClient()
 
 const uploadImage = async (file: File): Promise<string> => {
@@ -36,8 +37,8 @@ export default function EditPost() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
-  const { data: post, isLoading } = useUpdate(params.id)
-  const [updatedPost, setUpdatedPost] = useState<Post | null>(post?.content)
+  const { data: post, isLoading } = useUpdate(Array.isArray(params.id) ? params.id[0] : params.id)
+  const [updatedPost, setUpdatedPost] = useState<any | null>(post)
   const [imageFiles, setImageFiles] = useState<{ main: File | null; details: File[] }>({
     main: null,
     details: [],
@@ -46,7 +47,7 @@ export default function EditPost() {
   console.log('updatedPost', updatedPost)
   // 게시물 수정 뮤테이션
   const postMutation = useMutation({
-    mutationFn: ({ id, data }: { id: string; data: Post }) => updatePost(id, data),
+    mutationFn: ({ id, data }: { id: string; data: any }) => updatePost(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['post', params.id] })
       router.push(`/post/${params.id}`)
@@ -135,7 +136,7 @@ export default function EditPost() {
         data: updatedData,
       })
 
-      await queryClient.invalidateQueries(['post', params.id])
+      await queryClient.invalidateQueries({ queryKey: ['post', params.id] })
       router.push(`/post/${params.id}`)
     } catch (error) {
       console.error('Update failed:', error)
@@ -161,7 +162,7 @@ export default function EditPost() {
       />
       <div className="bg-background min-h-screen">
         <div className="flex items-center justify-between p-4">
-          <BackButton location="post" />
+          <BackButton />
         </div>
         <div className="mx-auto max-w-4xl space-y-8 p-4">
           <div className="container mx-auto px-4 py-8">

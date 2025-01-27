@@ -1,14 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { useEffect, useState } from 'react'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '@/app/firebase/firebase'
 import EmblaCarousel from '@/components/ui/EmblaCarousel'
-import type { Slide } from '@/types/slide'
 import LoadingComponent from '@/components/ui/LoadingComponent'
 
 export default function Home() {
-  const [posts, setPosts] = useState<Slide[]>([])
+  const [posts, setPosts] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function Home() {
       try {
         const querySnapshot = await getDocs(collection(db, 'posts'))
         const postsData = querySnapshot.docs.map((doc) => ({
-          id: doc.data().id,
+          id: Number(doc.data().id),
           title: doc.data().title,
           thumbnail: doc.data().thumbnailUrl,
           content: doc.data().content || '',

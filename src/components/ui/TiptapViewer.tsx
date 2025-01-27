@@ -4,7 +4,6 @@
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Image from '@tiptap/extension-image'
-import { Card, CardContent } from '@/components/ui/card'
 
 interface ViewerProps {
   content: string

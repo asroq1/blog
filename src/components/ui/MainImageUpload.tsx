@@ -55,7 +55,7 @@ export default function MainImageUpload({
               width={400}
               height={300}
               className="h-auto w-full rounded-lg"
-              unoptimized
+              // unoptimized
             />
             <Button
               variant="destructive"

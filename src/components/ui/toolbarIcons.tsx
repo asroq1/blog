@@ -3,8 +3,6 @@ import { Editor } from '@tiptap/react'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { useRef } from 'react'
-import { storage } from '@/app/firebase/firebase'
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 interface IconButtonProps {
   editor: Editor

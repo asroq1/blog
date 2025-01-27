@@ -85,7 +85,7 @@ export default function PostingPage() {
         message="썸네일 이미지를 넣어주세요."
       />
       <div className="mx-auto max-w-4xl space-y-8 p-4">
-        <BackButton location="post" isHidden={true} />
+        <BackButton />
         <div className="container mx-auto px-4 py-8">
           <div className="mb-8">
             <h2 className="mb-2 text-xl font-semibold">썸네일 이미지</h2>

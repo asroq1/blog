@@ -36,6 +36,7 @@ export function useUpdateAbout() {
       existingImageUrl?: string
     }) => {
       const docRef = doc(db, 'about', '2RxRX0U18j4g5aTAfc4D')
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const updateData: any = {
         content,
         aboutUrl: existingImageUrl, // 기존 이미지 URL 유지
@@ -50,7 +51,7 @@ export function useUpdateAbout() {
       await updateDoc(docRef, updateData)
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['about'])
+      queryClient.invalidateQueries({ queryKey: ['about'] })
     },
   })
 }
