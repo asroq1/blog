@@ -8,10 +8,12 @@ import BackButton from '@/components/ui/BackButton'
 import DetailCarousel from '@/components/ui/DetailCarousel'
 import TiptapViewer from '@/components/ui/TiptapViewer'
 import { useParams } from 'next/navigation'
-import React from 'react'
+import React, { useState } from 'react'
 
 const PostDetail = () => {
   const params = useParams()
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0)
+
   interface Post {
     id: string
     title: string
@@ -33,11 +35,8 @@ const PostDetail = () => {
   if (isLoading) return <LoadingState />
   if (!post) return <EmptyState />
   if (error) return <ErrorState message={`관리자에게 문의해주세요. ${error.message}`} />
-
-  // console.log('post', post)
-  // thumbnailUrl을 포함한 새로운 이미지 배열 생성
   const allImages = [post?.thumbnailUrl, ...post?.detailImageUrls]
-  // console.log('allImages', allImages)
+
   return (
     <>
       <div className="bg-background mx-auto my-0 flex  w-[90%] items-center justify-between p-2">
@@ -46,8 +45,17 @@ const PostDetail = () => {
       </div>
       <div className="laptop:items-center mx-auto  my-0 flex min-h-screen  w-[90%] items-start justify-center gap-6 bg-white p-4">
         <div className="mx-auto flex max-w-4xl flex-col gap-6">
-          <section className="w-full">
-            <DetailCarousel slides={allImages} title={post?.title} />
+          <section className="flex w-full flex-col gap-4">
+            <DetailCarousel
+              slides={allImages}
+              title={post?.title}
+              onSlideChange={setCurrentSlideIndex}
+            />
+            <div className="flex h-16 items-start">
+              <h3 className="text-lg ">
+                {post?.title} {currentSlideIndex + 1} / {allImages.length}
+              </h3>
+            </div>
           </section>
         </div>
       </div>

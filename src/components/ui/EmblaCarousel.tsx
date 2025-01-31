@@ -1,8 +1,11 @@
 import useEmblaCarousel from 'embla-carousel-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useEffect } from 'react'
 
 interface CarouselProps {
+  currentSlide?: number // 현재 슬라이드 인덱스 추가
+  onSlideChange?: (index: number) => void // 슬라이드 변경 핸들러 추가
   slides: {
     id: number
     thumbnail: string
@@ -14,11 +17,24 @@ interface CarouselProps {
   showDots?: boolean
 }
 
-export default function EmblaCarousel({ slides, autoplay = true, className }: CarouselProps) {
-  const [emblaRef] = useEmblaCarousel({
+export default function EmblaCarousel({
+  slides,
+  autoplay = true,
+  className,
+  onSlideChange,
+}: CarouselProps) {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     ...(autoplay && { autoplay: { delay: 1000 } }),
   })
+
+  useEffect(() => {
+    if (!emblaApi) return
+
+    emblaApi.on('select', () => {
+      onSlideChange?.(emblaApi.selectedScrollSnap())
+    })
+  }, [emblaApi, onSlideChange])
 
   return (
     <div className={`${className} relative h-full w-full`}>
@@ -38,9 +54,6 @@ export default function EmblaCarousel({ slides, autoplay = true, className }: Ca
                   />
                 </div>
               </Link>
-              <div className="absolute bottom-0 left-0 right-0 bg-black/50 p-4">
-                <h3 className="text-lg text-white">{slide.title}</h3>
-              </div>
             </div>
           ))}
         </div>

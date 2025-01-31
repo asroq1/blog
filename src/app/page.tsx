@@ -18,6 +18,7 @@ const EmblaCarousel = dynamic(() => import('@/components/ui/EmblaCarousel'), {
 export default function Home() {
   const [posts, setPosts] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [currentSlide, setCurrentSlide] = useState(0)
 
   useEffect(() => {
     async function fetchPosts() {
@@ -44,8 +45,11 @@ export default function Home() {
   return (
     <main className="laptop:w-full mx-auto flex h-screen w-[90%]">
       <div className="laptop:container laptop:mx-auto laptop:px-4 flex w-full items-center">
-        <div className="laptop:h-[600px] h-[400px] w-full">
-          <EmblaCarousel className="h-full w-full" slides={posts} />
+        <div className="laptop:h-[600px] flex h-[400px] w-full flex-col gap-4">
+          <EmblaCarousel className="h-full w-full" slides={posts} onSlideChange={setCurrentSlide} />
+          <div className="flex h-16 items-start">
+            <h3 className="text-center text-lg">{posts[currentSlide]?.title}</h3>
+          </div>
         </div>
       </div>
     </main>

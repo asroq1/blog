@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 interface CarouselProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   slides: any[]
+  onSlideChange?: (index: number) => void
   autoplay?: boolean
   showDots?: boolean
   title?: string
@@ -15,6 +16,7 @@ export default function DetailCarousel({
   autoplay = true,
   showDots = false,
   title,
+  onSlideChange,
 }: CarouselProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
@@ -24,12 +26,12 @@ export default function DetailCarousel({
 
   useEffect(() => {
     if (!emblaApi) return
-
-    // 현재 슬라이드 인덱스 추적
     emblaApi.on('select', () => {
-      setSelectedIndex(emblaApi.selectedScrollSnap())
+      const index = emblaApi.selectedScrollSnap()
+      setSelectedIndex(index)
+      onSlideChange?.(index) // 부모에게 인덱스 전달
     })
-  }, [emblaApi])
+  }, [emblaApi, onSlideChange])
 
   return (
     <div className="laptop:h-[300px] relative mx-auto w-full max-w-[800px] bg-black">
@@ -48,11 +50,11 @@ export default function DetailCarousel({
                 // unoptimized
               />
               {/* </Link> */}
-              <div className="absolute bottom-0 left-0 right-0 bg-black/50 p-4">
+              {/* <div className="absolute bottom-0 left-0 right-0 bg-black/50 p-4">
                 <h3 className="text-lg text-white">
                   {title} {index + 1} / {slides.length}
                 </h3>
-              </div>
+              </div> */}
             </div>
           ))}
         </div>

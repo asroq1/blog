@@ -27,7 +27,13 @@ const Navigation = () => {
       {/* 중앙 로고 */}
       <div className="flex h-full items-center justify-center">
         <Link href="/">
-          <Image src="/logo.jpeg" alt="이미지 로고" width={180} height={80} />
+          <Image
+            src="/logo.jpeg"
+            alt="이미지 로고"
+            width={280} // 기본 크기를 더 크게
+            height={100}
+            className="laptop:w-[300px] h-auto w-[200px]" // 반응형 크기 조정
+          />
         </Link>
       </div>
       {/* 오른쪽 햄버거 메뉴 */}
