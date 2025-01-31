@@ -1,14 +1,27 @@
+'use client'
+
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import LogoutButton from '../ui/LogoutButton'
 import { AuthRequired } from '@/lib/AuthGuard'
 import { Menu } from 'lucide-react'
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetDescription,
+} from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import PostingButton from '../ui/PostingButton'
 
 const Navigation = () => {
+  const [isOpen, setIsOpen] = useState(false)
+  const handleLinkClick = () => {
+    setIsOpen(false)
+  }
   return (
     <header className="relative flex h-[62px] justify-center bg-white p-2">
       {/* 중앙 로고 */}
@@ -19,7 +32,7 @@ const Navigation = () => {
       </div>
       {/* 오른쪽 햄버거 메뉴 */}
       <div className="absolute right-2 top-1/2 -translate-y-1/2">
-        <Sheet>
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild className="laptop:hidden">
             <Button variant="ghost" size="icon">
               <Menu className="h-6 w-6" />
@@ -28,16 +41,17 @@ const Navigation = () => {
           <SheetContent>
             <SheetHeader>
               <SheetTitle></SheetTitle>
+              <SheetDescription></SheetDescription>
             </SheetHeader>
             <nav className="flex flex-col gap-4 pt-10">
               <AuthRequired>
                 <LogoutButton />
                 <PostingButton />
               </AuthRequired>
-              <Link href="/" className="text-sm">
+              <Link href="/" className="text-sm" onClick={handleLinkClick}>
                 Work
               </Link>
-              <Link href="/about" className="text-sm">
+              <Link href="/about" className="text-sm" onClick={handleLinkClick}>
                 About
               </Link>
             </nav>
