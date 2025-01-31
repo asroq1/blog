@@ -16,7 +16,7 @@ export default function LogoutButton() {
         method: 'POST',
       })
       router.push('/')
-      console.log('Logout successful')
+      // console.log('Logout successful')
     } catch (error) {
       console.error('Logout failed:', error)
     }

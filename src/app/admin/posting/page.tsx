@@ -73,9 +73,6 @@ export default function PostingPage() {
     }
   }
 
-  useEffect(() => {
-    console.log('디테일 이미지 상태 변경:', detailImages)
-  }, [detailImages])
   return (
     <>
       <AlertMessage

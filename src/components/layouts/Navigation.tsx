@@ -17,7 +17,6 @@ const Navigation = () => {
           <Image src="/logo.jpeg" alt="logo" width={100} height={40} />
         </Link>
       </div>
-
       {/* 오른쪽 햄버거 메뉴 */}
       <div className="absolute right-2 top-1/2 -translate-y-1/2">
         <Sheet>
@@ -45,19 +44,21 @@ const Navigation = () => {
           </SheetContent>
         </Sheet>
       </div>
-
       {/* 데스크톱 네비게이션 */}
-      <nav className="laptop:flex absolute right-2 hidden items-center gap-4">
+      <nav className="laptop:flex laptop:h-[62px] absolute right-2 hidden items-center gap-4">
         <AuthRequired>
           <LogoutButton />
           <PostingButton />
         </AuthRequired>
-        <Link href="/" className="text-sm">
-          Work
-        </Link>
-        <Link href="/about" className="text-sm">
-          About
-        </Link>
+        <div className="flex h-full items-center gap-4">
+          {/* 새로운 div 추가 */}
+          <Link href="/" className="text-sm">
+            Work
+          </Link>
+          <Link href="/about" className="text-sm">
+            About
+          </Link>
+        </div>
       </nav>
     </header>
   )

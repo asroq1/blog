@@ -44,7 +44,7 @@ export default function EditPost() {
     details: [],
   })
 
-  console.log('updatedPost', updatedPost)
+  // console.log('updatedPost', updatedPost)
   // 게시물 수정 뮤테이션
   const postMutation = useMutation({
     mutationFn: ({ id, data }: { id: string; data: any }) => updatePost(id, data),

@@ -16,7 +16,6 @@ export function usePost(postId: string) {
       if (snapshot.empty) throw new Error('Post not found')
 
       const post = snapshot.docs[0].data()
-      console.log('받아온 데이터', post)
       return { id: post.id, ...post }
     },
   })

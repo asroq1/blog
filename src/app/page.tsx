@@ -9,7 +9,7 @@ import LoadingComponent from '@/components/ui/LoadingComponent'
 import dynamic from 'next/dynamic'
 import { LoadingState } from '@/components/layouts/LoadingState'
 
-// \동적 임포트로 클라이언트 사이드에서만 로드
+// 동적 임포트로 클라이언트 사이드에서만 로드
 const EmblaCarousel = dynamic(() => import('@/components/ui/EmblaCarousel'), {
   ssr: false,
   loading: () => <LoadingComponent isLoading={true} text="" size="lg" />,
@@ -30,7 +30,6 @@ export default function Home() {
           content: doc.data().content || '',
         }))
         setPosts(postsData)
-        console.log('Posts:', postsData)
       } catch (error) {
         console.error('Error fetching posts:', error)
       } finally {
