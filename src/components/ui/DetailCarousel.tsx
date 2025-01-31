@@ -8,14 +8,12 @@ interface CarouselProps {
   onSlideChange?: (index: number) => void
   autoplay?: boolean
   showDots?: boolean
-  title?: string
 }
 
 export default function DetailCarousel({
   slides,
   autoplay = true,
   showDots = false,
-  title,
   onSlideChange,
 }: CarouselProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({

@@ -5,10 +5,17 @@ import { usePost } from '@/app/hooks/usePost'
 import { EmptyState, ErrorState, LoadingState } from '@/components/layouts/LoadingState'
 import { ActionButtons } from '@/components/ui/ActionButtons'
 import BackButton from '@/components/ui/BackButton'
-import DetailCarousel from '@/components/ui/DetailCarousel'
+import LoadingComponent from '@/components/ui/LoadingComponent'
 import TiptapViewer from '@/components/ui/TiptapViewer'
+import dynamic from 'next/dynamic'
 import { useParams } from 'next/navigation'
 import React, { useState } from 'react'
+
+// 동적 임포트로 클라이언트 사이드에서만 로드
+const DetailCarousel = dynamic(() => import('@/components/ui/DetailCarousel'), {
+  ssr: false,
+  loading: () => <LoadingComponent isLoading={true} text="" size="lg" />,
+})
 
 const PostDetail = () => {
   const params = useParams()
@@ -46,13 +53,9 @@ const PostDetail = () => {
       <div className="laptop:items-center mx-auto  my-0 flex min-h-screen  w-[90%] items-start justify-center gap-6 bg-white p-4">
         <div className="mx-auto flex max-w-4xl flex-col gap-6">
           <section className="flex w-full flex-col gap-4">
-            <DetailCarousel
-              slides={allImages}
-              title={post?.title}
-              onSlideChange={setCurrentSlideIndex}
-            />
+            <DetailCarousel slides={allImages} onSlideChange={setCurrentSlideIndex} />
             <div className="flex h-16 items-start">
-              <h3 className="text-lg ">
+              <h3 className="text-lg">
                 {post?.title} {currentSlideIndex + 1} / {allImages.length}
               </h3>
             </div>
