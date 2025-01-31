@@ -20,7 +20,15 @@ export default {
       fontFamily: {
         sans: ['var(--font-arita)'],
       },
+      textColor: {
+        DEFAULT: '#4B5563', // 기본 텍스트 색상
+        light: '#6B7280', // 밝은 텍스트 색상
+      },
       colors: {
+        text: {
+          DEFAULT: '#4B5563',
+          light: '#6B7280',
+        },
         background: '#F3F4F6',
         foreground: 'hsl(var(--foreground))',
         card: {

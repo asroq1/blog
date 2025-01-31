@@ -2,6 +2,7 @@
 'use client'
 
 import { usePost } from '@/app/hooks/usePost'
+import { EmptyState, ErrorState, LoadingState } from '@/components/layouts/LoadingState'
 import { ActionButtons } from '@/components/ui/ActionButtons'
 import BackButton from '@/components/ui/BackButton'
 import DetailCarousel from '@/components/ui/DetailCarousel'
@@ -29,9 +30,9 @@ const PostDetail = () => {
     error: any
   }
 
-  if (isLoading) return <div>Loading...</div>
-  if (error) return <div>Error loading post</div>
-  if (!post) return <div>Post not found</div>
+  if (isLoading) return <LoadingState />
+  if (!post) return <EmptyState />
+  if (error) return <ErrorState message={`관리자에게 문의해주세요. ${error.message}`} />
 
   // console.log('post', post)
   // thumbnailUrl을 포함한 새로운 이미지 배열 생성

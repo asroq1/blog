@@ -4,8 +4,16 @@
 import { useEffect, useState } from 'react'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '@/app/firebase/firebase'
-import EmblaCarousel from '@/components/ui/EmblaCarousel'
+// import EmblaCarousel from '@/components/ui/EmblaCarousel'
 import LoadingComponent from '@/components/ui/LoadingComponent'
+import dynamic from 'next/dynamic'
+import { LoadingState } from '@/components/layouts/LoadingState'
+
+// \동적 임포트로 클라이언트 사이드에서만 로드
+const EmblaCarousel = dynamic(() => import('@/components/ui/EmblaCarousel'), {
+  ssr: false,
+  loading: () => <LoadingComponent isLoading={true} text="" size="lg" />,
+})
 
 export default function Home() {
   const [posts, setPosts] = useState<any[]>([])
@@ -33,8 +41,7 @@ export default function Home() {
     fetchPosts()
   }, [])
 
-  if (loading) return <LoadingComponent isLoading={loading} text="" size="lg" />
-
+  if (loading) return <LoadingState />
   return (
     <main className="laptop:h-screen laptop:w-full mx-auto  flex h-screen w-[90%] items-center">
       <div className="laptop:container laptop:mx-auto laptop:px-4 w-full">
