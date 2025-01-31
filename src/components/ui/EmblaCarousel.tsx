@@ -21,13 +21,13 @@ export default function EmblaCarousel({ slides, autoplay = true, className }: Ca
   })
 
   return (
-    <div className={`${className} relative mx-auto w-full`}>
-      <div className="overflow-hidden" ref={emblaRef}>
+    <div className={`${className} relative h-full w-full`}>
+      <div className="h-full overflow-hidden" ref={emblaRef}>
         <div className="flex h-full">
           {slides.map((slide) => (
-            <div key={slide.id} className="relative min-w-0 flex-[0_0_100%]">
-              <Link href={`/post/${slide.id}`}>
-                <div className="relative aspect-[4/3] w-full">
+            <div key={slide.id} className="relative h-full min-w-0 flex-[0_0_100%]">
+              <Link href={`/post/${slide.id}`} className="block h-full">
+                <div className="relative h-full w-full">
                   <Image
                     src={slide.thumbnail}
                     alt={slide.title}
@@ -35,7 +35,6 @@ export default function EmblaCarousel({ slides, autoplay = true, className }: Ca
                     fill
                     sizes="100vw"
                     priority
-                    // unoptimized
                   />
                 </div>
               </Link>
@@ -46,7 +45,6 @@ export default function EmblaCarousel({ slides, autoplay = true, className }: Ca
           ))}
         </div>
       </div>
-      {/* ... dots navigation remains the same */}
     </div>
   )
 }

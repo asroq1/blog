@@ -42,13 +42,11 @@ export default function Home() {
 
   if (loading) return <LoadingState />
   return (
-    <main className="laptop:h-screen laptop:w-full mx-auto  flex h-screen w-[90%] items-center">
-      <div className="laptop:container laptop:mx-auto laptop:px-4 w-full">
-        <EmblaCarousel
-          className="laptop:h-screen h-[400px] w-full object-cover"
-          imageClassName="h-screen laptop:h-[600px] object-cover"
-          slides={posts}
-        />
+    <main className="laptop:w-full mx-auto flex h-screen w-[90%]">
+      <div className="laptop:container laptop:mx-auto laptop:px-4 flex w-full items-center">
+        <div className="laptop:h-[600px] h-[400px] w-full">
+          <EmblaCarousel className="h-full w-full" slides={posts} />
+        </div>
       </div>
     </main>
   )
