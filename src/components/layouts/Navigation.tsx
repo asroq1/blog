@@ -14,7 +14,7 @@ const Navigation = () => {
       {/* 중앙 로고 */}
       <div className="flex h-full items-center justify-center">
         <Link href="/">
-          <Image src="/logo.jpeg" alt="logo" width={100} height={40} />
+          <Image src="/logo.jpeg" alt="이미지 로고" width={180} height={80} />
         </Link>
       </div>
       {/* 오른쪽 햄버거 메뉴 */}

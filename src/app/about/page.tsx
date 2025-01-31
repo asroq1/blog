@@ -50,11 +50,14 @@ export default function ProfilePage() {
         <article className="flex h-60 w-full flex-col items-center justify-center  gap-4 p-4">
           작품 문의나 협업 제안을 환영합니다.
           <div className="flex gap-4">
-            {/* TODO : 이메일, 인스타그램 링크 연결 */}
-            <Link href="">
+            <Link href="mailto:yeozuyong@gmail.com" target="_blank" rel="noopener noreferrer">
               <EmailIcon />
             </Link>
-            <Link href="">
+            <Link
+              href="https://www.instagram.com/yeo.juyong"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <InstaIcon />
             </Link>
           </div>
