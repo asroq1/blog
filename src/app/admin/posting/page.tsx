@@ -1,7 +1,7 @@
 // app/admin/write/page.tsx
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { createPost } from '@/app/firebase/posting'
 import { useRouter } from 'next/navigation'
 import BackButton from '@/components/ui/BackButton'
