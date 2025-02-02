@@ -1,6 +1,6 @@
 import useEmblaCarousel from 'embla-carousel-react'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 interface CarouselProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -13,20 +13,19 @@ interface CarouselProps {
 export default function DetailCarousel({
   slides,
   autoplay = true,
-  showDots = false,
+
   onSlideChange,
 }: CarouselProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     ...(autoplay && { autoplay: { delay: 1000 } }),
   })
-  const [selectedIndex, setSelectedIndex] = useState(0)
 
   useEffect(() => {
     if (!emblaApi) return
     emblaApi.on('select', () => {
       const index = emblaApi.selectedScrollSnap()
-      setSelectedIndex(index)
+
       onSlideChange?.(index) // 부모에게 인덱스 전달
     })
   }, [emblaApi, onSlideChange])
