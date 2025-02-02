@@ -32,6 +32,7 @@ const Navigation = () => {
             alt="이미지 로고"
             width={280} // 기본 크기를 더 크게
             height={100}
+            priority
             className="laptop:w-[300px] h-auto w-[200px]" // 반응형 크기 조정
           />
         </Link>

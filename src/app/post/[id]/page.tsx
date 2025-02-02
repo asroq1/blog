@@ -50,16 +50,19 @@ const PostDetail = () => {
         <BackButton classNmae="bg-background" />
         <ActionButtons id={params.id} location="post" />
       </div>
-      <div className="laptop:items-center mx-auto  my-0 flex h-[90%] w-[90%] items-start justify-center gap-6 bg-white p-4">
-        <div className="mx-auto flex max-w-4xl flex-col gap-6">
-          <section className="flex w-full flex-col gap-4">
-            <DetailCarousel slides={allImages} onSlideChange={setCurrentSlideIndex} />
-            <div className="flex h-16 items-start">
-              <h3 className="text-lg">
-                {post?.title} {currentSlideIndex + 1} / {allImages.length}
-              </h3>
-            </div>
-          </section>
+      <div className="bg-background">
+        {/* 외부 div: 패딩 영역의 배경색 */}
+        <div className="laptop:items-center mx-auto my-0 flex w-[90%] items-start justify-center gap-6 bg-white p-4">
+          <div className="mx-auto flex w-full flex-col gap-6">
+            <section className="flex w-full flex-col gap-4">
+              <DetailCarousel slides={allImages} onSlideChange={setCurrentSlideIndex} />
+              <div className="flex h-16 items-start">
+                <h3 className="text-lg">
+                  {post?.title} {currentSlideIndex + 1} / {allImages.length}
+                </h3>
+              </div>
+            </section>
+          </div>
         </div>
       </div>
       <section className="mx-auto my-0 flex w-[90%]  items-center justify-center bg-white p-4">

@@ -32,46 +32,31 @@ export default function DetailCarousel({
   }, [emblaApi, onSlideChange])
 
   return (
-    <div className="laptop:h-[300px] relative mx-auto w-full max-w-[800px] bg-black">
-      {/* 캐러셀 기본 구조 */}
-      <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex">
-          {slides.map((item, index) => (
-            <div key={index} className="relative min-w-0 flex-[0_0_100%]">
-              {/* <Link href={`/post/${slide.id}`}> */}
-              <Image
-                src={item}
-                alt={item}
-                className="h-[400px] w-full object-cover"
-                width={600}
-                height={400}
-                // unoptimized
-              />
-              {/* </Link> */}
-              {/* <div className="absolute bottom-0 left-0 right-0 bg-black/50 p-4">
-                <h3 className="text-lg text-white">
-                  {title} {index + 1} / {slides.length}
-                </h3>
-              </div> */}
-            </div>
-          ))}
+    <div className="relative w-full">
+      {/* max-height 추가하고 aspect ratio 제거 */}
+      <div className="relative mx-auto w-full max-w-[1200px] overflow-hidden">
+        {' '}
+        {/* max-width 증가 */}
+        <div className="h-full" ref={emblaRef}>
+          <div className="flex">
+            {slides.map((item, index) => (
+              <div key={index} className="relative min-w-0 flex-[0_0_100%]">
+                <div className="laptop:h-[600px] relative h-[400px]">
+                  {/* 고정 높이 설정 */}
+                  <Image
+                    src={item}
+                    alt={`slide-${index + 1}`}
+                    className="object-contain"
+                    fill
+                    sizes="(max-width: 768px) 90vw, 1200px"
+                    priority
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-
-      {/* 도트 네비게이션 - z-index 추가 및 위치 조정 */}
-      {showDots && (
-        <div className="absolute bottom-8 left-0 right-0 z-10 flex justify-center gap-2 ">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              className={`h-3 w-3 rounded-full transition-colors ${
-                index === selectedIndex ? 'bg-white' : 'bg-white/50'
-              }`}
-              onClick={() => emblaApi?.scrollTo(index)}
-            />
-          ))}
-        </div>
-      )}
     </div>
   )
 }
