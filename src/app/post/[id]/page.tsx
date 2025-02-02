@@ -50,7 +50,7 @@ const PostDetail = () => {
         <BackButton classNmae="bg-background" />
         <ActionButtons id={params.id} location="post" />
       </div>
-      <div className="laptop:items-center mx-auto  my-0 flex min-h-screen  w-[90%] items-start justify-center gap-6 bg-white p-4">
+      <div className="laptop:items-center mx-auto  my-0 flex h-[90%] w-[90%] items-start justify-center gap-6 bg-white p-4">
         <div className="mx-auto flex max-w-4xl flex-col gap-6">
           <section className="flex w-full flex-col gap-4">
             <DetailCarousel slides={allImages} onSlideChange={setCurrentSlideIndex} />
