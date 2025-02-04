@@ -56,6 +56,9 @@ const Navigation = () => {
                 <PostingButton />
               </AuthRequired>
               <Link href="/" className="text-sm" onClick={handleLinkClick}>
+                Home
+              </Link>
+              <Link href="/work" className="text-sm" onClick={handleLinkClick}>
                 Work
               </Link>
               <Link href="/about" className="text-sm" onClick={handleLinkClick}>
@@ -73,7 +76,10 @@ const Navigation = () => {
         </AuthRequired>
         <div className="flex h-full items-center gap-4">
           {/* 새로운 div 추가 */}
-          <Link href="/" className="text-sm">
+          <Link href="/" className="text-sm" onClick={handleLinkClick}>
+            Home
+          </Link>
+          <Link href="/work" className="text-sm">
             Work
           </Link>
           <Link href="/about" className="text-sm">
