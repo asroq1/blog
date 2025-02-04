@@ -47,7 +47,7 @@ const PostDetail = () => {
   return (
     <>
       <div className="bg-background mx-auto my-0 flex  w-[90%] items-center justify-between p-2">
-        <BackButton classNmae="bg-background" />
+        <BackButton classNmae="bg-background" location="work" />
         <ActionButtons id={params.id} location="post" />
       </div>
       <div className="bg-background">

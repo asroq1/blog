@@ -5,11 +5,12 @@ import { ArrowLeft } from 'lucide-react'
 
 interface BackButtonProps {
   classNmae?: string
+  location?: string
 }
-const BackButton = ({ classNmae }: BackButtonProps) => {
+const BackButton = ({ classNmae, location }: BackButtonProps) => {
   const router = useRouter()
   const handleClick = () => {
-    router.push('/')
+    router.push(location ? `/${location}` : '/')
   }
 
   return (
