@@ -18,7 +18,12 @@ interface CarouselProps {
   showDots?: boolean
 }
 
-export default function WorkCarousel({ slides, autoplay = true, className }: CarouselProps) {
+export default function WorkCarousel({
+  slides,
+  autoplay = true,
+  className,
+  onSlideChange,
+}: CarouselProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     ...(autoplay && { autoplay: { delay: 1000 } }),
@@ -39,13 +44,23 @@ export default function WorkCarousel({ slides, autoplay = true, className }: Car
   useEffect(() => {
     if (!emblaApi) return
 
+    // 슬라이드 변경 시 현재 인덱스를 부모에게 전달
+    const handleSelect = () => {
+      const currentIndex = emblaApi.selectedScrollSnap()
+      onSlideChange?.(currentIndex)
+    }
     emblaApi.on('select', updateIsFirstSlide)
-    updateIsFirstSlide() // 초기 상태 설정
+    updateIsFirstSlide()
+    emblaApi.on('select', handleSelect)
+    handleSelect()
+    // 초기 인덱스 전달
 
     return () => {
-      emblaApi.off('select', updateIsFirstSlide)
+      emblaApi.off('select', handleSelect)
     }
-  }, [emblaApi, updateIsFirstSlide])
+  }, [emblaApi, onSlideChange])
+
+  // ... 나머지 코드
 
   return (
     <div className={`${className} relative h-full w-full`}>
@@ -69,7 +84,6 @@ export default function WorkCarousel({ slides, autoplay = true, className }: Car
           ))}
         </div>
       </div>
-
       {/* 첫 번째 슬라이드에서만 표시되는 화살표 */}
       {isFirstSlide && (
         <button

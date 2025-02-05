@@ -50,9 +50,8 @@ export default function Work() {
             slides={posts}
             onSlideChange={setCurrentSlide}
           />
-          <div className="flex h-16 items-start">
-            <h3 className="text-center text-lg">{posts[currentSlide]?.title}</h3>
-          </div>
+
+          <div className="flex h-16 items-start">{posts[currentSlide]?.title}</div>
         </div>
       </div>
     </main>
